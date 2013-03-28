@@ -1,0 +1,449 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>jQuery AddressPicker for Leaflet</title>
+        <link rel="stylesheet" href="css/bootstrap.css">
+        <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.5.1/leaflet.css" />
+        <link rel="stylesheet" href="http://xilinus.com/jquery-addresspicker/demos/themes/base/jquery.ui.all.css">
+        <!--[if lte IE 8]>
+            <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.5.1/leaflet.ie.css" />
+        <![endif]-->
+        <script src="http://code.jquery.com/jquery-1.9.1.min.js" type="text/javascript"></script>
+        <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js" type="text/javascript"></script>
+        <script src="http://cdn.leafletjs.com/leaflet-0.5.1/leaflet.js" type="text/javascript"></script>
+        <script src="http://maps.google.com/maps/api/js?sensor=false" type="text/javascript"></script>
+        <script src="src/jquery.leaflet.addresspicker.js" type="text/javascript"></script>
+        <script src="js/bootstrap.min.js" type="text/javascript"></script>
+    </head>
+    <body>
+        <!-- Part 1: Wrap all page content here -->
+        <div id="wrap">
+            <div class="navbar navbar-inverse navbar-fixed-top">
+                <div class="navbar-inner">
+                    <div class="container">
+                        <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse" sourceindex="0">
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a class="brand" href="#">jQuery Leaflet Addresspicker</a>
+                    </div>
+                </div>
+            </div>
+            <!-- Begin page content -->
+            <div class="container-fluid">
+                <div class="row-fluid">
+                    <div class="page-header">
+                        <h1>jQuery addresspicker for leaflet maps!</h1>
+                    </div>
+                </div>
+                <div class="accordion">
+                    <div class="accordion-group">
+                        <div class="accordion-heading">
+                            <a href="#demo" class="accordion-toggle" data-toggle="collapse">
+                                Demonstration
+                            </a>
+                        </div><!-- /.accordion-heading -->
+                        <div id="demo" class="accordion-body collapse in">
+                            <div class="row-fluid">
+                                <div class="span3 offset6">
+                                    <input class="address" type="text" placeholder="Address...">
+                                </div>
+                            </div><!-- /.row-fluid -->
+                            <div class="row-fluid">
+                                <div class="span4">
+                                    <div class="input-prepend">
+                                        <span class="add-on">Latitude</span>
+                                        <input class="input-medium lat" type="text" placeholder="Latitude" disabled>
+                                    </div>
+
+                                    <div class="input-prepend">
+                                        <span class="add-on">Longitude</span>
+                                        <input class="input-medium lng" type="text" placeholder="Longitude" disabled>
+                                    </div>
+
+                                    <div class="input-prepend">
+                                        <span class="add-on">Locality</span>
+                                        <input class="input-medium locality" type="text" placeholder="Locality" disabled>
+                                    </div>
+
+                                    <div class="input-prepend">
+                                        <span class="add-on">Zone Administrative 1</span>
+                                        <input  
+                                                class="input-medium administrative_area_level_1" 
+                                                type="text" placeholder="Zone Administrative 1" 
+                                                disabled
+                                        >
+                                    </div>
+
+                                    <div class="input-prepend">
+                                        <span class="add-on">Zone Administrative 2</span>
+                                        <input  
+                                                class="input-medium administrative_area_level_2" 
+                                                type="text" placeholder="Zone Administrative 2" 
+                                                disabled
+                                        >
+                                    </div>
+
+                                    <div class="input-prepend">
+                                        <span class="add-on">Pays</span>
+                                        <input class="input-medium country" type="text" placeholder="Pays" disabled>
+                                    </div>
+
+                                    <div class="input-prepend">
+                                        <span class="add-on">Code Postal</span>
+                                        <input class="input-medium zip_code" type="text" placeholder="Code Postal" disabled>
+                                    </div>
+
+                                    <div class="input-prepend">
+                                        <span class="add-on">Type</span>
+                                        <input class="input-medium type" type="text" placeholder="Type" disabled>
+                                    </div>
+                                </div>
+                                <div class="span6">
+                                    <div class="map"></div>
+                                </div>
+                            </div><!-- /.row-fluid -->
+                        </div><!-- /#demo.accordion-body -->
+                    </div><!-- /.accordion-group -->
+
+                    <div class="accordion-group">
+                        <div class="accordion-heading">
+                            <a href="#documentation" id="demo" class="accordion-toggle" data-toggle="collapse">
+                                Documentation
+                            </a>
+                        </div>
+                        <div id="documentation" class="accordion-body collapse">
+                            <div class="row-fluid">
+                                <table class="table table-stripped table-bordered span10 offset1">
+                                    <thead>
+                                        <tr>
+                                            <th>Nom de l'option</th>
+                                            <th>Valeur par Défaut</th>
+                                            <th>Description</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>address_suffix</td>
+                                            <td>"" (chaine de caractères vide)</td>
+                                            <td>
+                                                Suffixe à rajouter aux adresses lors de l'envoi au géocodeur. <br>
+                                                Exemple: ", France" si vous ne voulez que des adresses française.
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>bind_marker</td>
+                                            <td>true</td>
+                                            <td>Afficher un marqueur sur la map.</td>
+                                        </tr>
+                                        <tr>
+                                            <td>draggable_marker</td>
+                                            <td>true</td>
+                                            <td>Donner la possibilité à l'utilisateur de déplacer le marqueur sur la map.</td>
+                                        </tr>
+                                        <tr>
+                                            <td>region_bias</td>
+                                            <td>null</td>
+                                            <td>
+                                                Influencer le résultat renvoyé par le geocodeur en fonction d'une région. <br>
+                                                Par exemple, si region_bias est à "fr", une recherche sur Paris renverra la capitale française et non son homonyme du Texas ou du Tennessee.
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>update_callback</td>
+                                            <td>null</td>
+                                            <td>Pour l'instant inutilisé.</td>
+                                        </tr>
+                                        <tr>
+                                            <td>map_options.min_zoom</td>
+                                            <td>4</td>
+                                            <td>Niveau de zoom minimum</td>
+                                        </tr>
+                                        <tr>
+                                            <td>map_options.max_zoom</td>
+                                            <td>18</td>
+                                            <td>Niveau de zoom maximum.</td>
+                                        </tr>
+                                        <tr>
+                                            <td>map_options.tile.url</td>
+                                            <td>
+                                                "http://{s}.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/997/256/{z}/{x}/{y}.png"
+                                            </td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td>map_options.tile.attrib</td>
+                                            <td>"Map data © openstreetmap contributors"</td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td>map_options.zoom</td>
+                                            <td>5</td>
+                                            <td>Niveau de zoom initial.</td>
+                                        </tr>
+                                        <tr>
+                                            <td>map_options.center</td>
+                                            <td>new L.LatLng(46, 2)</td>
+                                            <td>Centrage par défaut.</td>
+                                        </tr>
+                                        <tr>
+                                            <td>map_options.scroll_wheel</td>
+                                            <td>false</td>
+                                            <td>Autoriser le zoom sur la map au scroll.</td>
+                                        </tr>
+                                        <tr>
+                                            <td>elements.map</td>
+                                            <td>false</td>
+                                            <td>Balise accueillant la map.</td>
+                                        </tr>
+                                        <tr>
+                                            <td>elements.lat</td>
+                                            <td>false</td>
+                                            <td>Input dans lequel sera affichée la latitude.</td>
+                                        </tr>
+                                        <tr>
+                                            <td>elements.lng</td>
+                                            <td>false</td>
+                                            <td>Input dans lequel sera affichée la longitude.</td>
+                                        </tr>
+                                        <tr>
+                                            <td>elements.locality</td>
+                                            <td>false</td>
+                                            <td>Input dans lequel sera affichée la ville.</td>
+                                        </tr>
+                                        <tr>
+                                            <td>elements.administrative_area_level_1</td>
+                                            <td>false</td>
+                                            <td>
+                                                Input dans lequel sera affichée la zone administrative de niveau 1. <br>
+                                                État aux USA, Région en France.
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>elements.administrative_area_level_2</td>
+                                            <td>false</td>
+                                            <td>
+                                                Input dans lequel sera affichée la zone administrative de niveau 2. <br>
+                                                Département en France.
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>elements.country</td>
+                                            <td>false</td>
+                                            <td>Input dans lequel sera affiché le pays.</td>
+                                        </tr>
+                                        <tr>
+                                            <td>elements.zip_code</td>
+                                            <td>false</td>
+                                            <td>Input dans lequel sera affiché le code postal.</td>
+                                        </tr>
+                                        <tr>
+                                            <td>elements.type</td>
+                                            <td>false</td>
+                                            <td>
+                                                Input dans lequel sera affiché le type de la vue.
+                                                Par exemple: localité, établissement, adresse, etc.
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-group">
+                        <div class="accordion-heading">
+                            <a href="#english_documentation" id="demo" class="accordion-toggle" data-toggle="collapse">
+                                English documentation (Of course!)
+                            </a>
+                        </div>
+                        <div id="english_documentation" class="accordion-body collapse">
+                            <div class="row-fluid">
+                                <table class="table table-stripped table-bordered span10 offset1">
+                                    <thead>
+                                        <tr>
+                                            <th>Option name</th>
+                                            <th>Default value</th>
+                                            <th>Description</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>address_suffix</td>
+                                            <td>"" (empty string)</td>
+                                            <td>
+                                                Suffix to add at the end of the address before sending it to the geocoder. <br>
+                                                Example: ", France" if you want to search after french addresses.
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>bind_marker</td>
+                                            <td>true</td>
+                                            <td>Bind a marker on the map.</td>
+                                        </tr>
+                                        <tr>
+                                            <td>draggable_marker</td>
+                                            <td>true</td>
+                                            <td>Let the user move the marker on the map.</td>
+                                        </tr>
+                                        <tr>
+                                            <td>region_bias</td>
+                                            <td>null</td>
+                                            <td>
+                                                To influence the result sent by the geocoder in accordance with a region. <br>
+                                                For example, if region_bias is "fr", a search on "Paris" keyword will send you back the french capital instead of the city in Texas or Tennessee.
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>update_callback</td>
+                                            <td>null</td>
+                                            <td>Not used for the moment.</td>
+                                        </tr>
+                                        <tr>
+                                            <td>map_options.min_zoom</td>
+                                            <td>4</td>
+                                            <td>Minimum zoom level</td>
+                                        </tr>
+                                        <tr>
+                                            <td>map_options.max_zoom</td>
+                                            <td>18</td>
+                                            <td>Maximum zoom level.</td>
+                                        </tr>
+                                        <tr>
+                                            <td>map_options.tile.url</td>
+                                            <td>
+                                                "http://{s}.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/997/256/{z}/{x}/{y}.png"
+                                            </td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td>map_options.tile.attrib</td>
+                                            <td>"Map data © openstreetmap contributors"</td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td>map_options.zoom</td>
+                                            <td>5</td>
+                                            <td>Initial zoom level.</td>
+                                        </tr>
+                                        <tr>
+                                            <td>map_options.center</td>
+                                            <td>new L.LatLng(46, 2)</td>
+                                            <td>Default centring.</td>
+                                        </tr>
+                                        <tr>
+                                            <td>map_options.scroll_wheel</td>
+                                            <td>false</td>
+                                            <td>Authorize the user to zoom by scrolling.</td>
+                                        </tr>
+                                        <tr>
+                                            <td>elements.map</td>
+                                            <td>false</td>
+                                            <td>Tag within which the map will be.</td>
+                                        </tr>
+                                        <tr>
+                                            <td>elements.lat</td>
+                                            <td>false</td>
+                                            <td>Tag within which the latitude will be displayed.</td>
+                                        </tr>
+                                        <tr>
+                                            <td>elements.lng</td>
+                                            <td>false</td>
+                                            <td>Tag within which the longitude will be displayed.</td>
+                                        </tr>
+                                        <tr>
+                                            <td>elements.locality</td>
+                                            <td>false</td>
+                                            <td>Tag within which the city will be displayed.</td>
+                                        </tr>
+                                        <tr>
+                                            <td>elements.administrative_area_level_1</td>
+                                            <td>false</td>
+                                            <td>
+                                               Tag within which the administrative area level 1 will be displayed. <br>
+                                                For example States in USA, "Région" in France.
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>elements.administrative_area_level_2</td>
+                                            <td>false</td>
+                                            <td>
+                                                Tag within which the administrative area level 2 will be displayed. <br>
+                                                Departments in France.
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>elements.country</td>
+                                            <td>false</td>
+                                            <td>Tag within which the country will be displayed.</td>
+                                        </tr>
+                                        <tr>
+                                            <td>elements.zip_code</td>
+                                            <td>false</td>
+                                            <td>Tag within which the zip code will be displayed.</td>
+                                        </tr>
+                                        <tr>
+                                            <td>elements.type</td>
+                                            <td>false</td>
+                                            <td>
+                                                Tag within which the view type will be displayed.
+                                                For example: locality, establishment, street address, etc.
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-group">
+                        <div class="accordion-heading">
+                            <a href="#about" class="accordion-toggle" data-toggle="collapse">About</a>
+                        </div>
+                        <div id="about" class="accordion-body collapse">
+                            <div class="row-fluid">
+                                <div class="span10 offset1">
+                                    <p>
+                                        Le projet <strong>jQuery Leaflet addresspicker</strong> est inspiré de <a href="https://github.com/sgruhier/jquery-addresspicker">jQuery addresspicker</a> qui fait globalement la même chose, mais pour google maps.
+                                    </p>
+                                    <p>
+                                        Je travaillais sur un projet leaflet et voulais avoir quelque chose comme jQuery addresspicker, donc j'ai eu l'idée de faire leaflet addresspicker.
+                                    </p>
+                                    <p>
+                                        Si vous voulez contribuer, faites un fork du projet et envoyez une pull request :).
+                                    </p>
+                                </div>
+                            </div>
+                            <br><br>
+                            <div class="row-fluid">
+                                <div class="span10 offset1">
+                                    <p>
+                                        The project <strong>jQuery Leaflet addresspicker</strong> was inspired by <a href="https://github.com/sgruhier/jquery-addresspicker">jQuery addresspicker</a> which is nearly the same plugin for google maps.
+                                    </p>
+                                    <p>
+                                        I was working on leaflet and wanted to have something like jQuery addresspicker, so i did leaflet addresspicker.
+                                    </p>
+                                    <p>
+                                        If you want to contribute, please fork the project and do a pull request :).
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div><!-- /.accordion -->
+
+            </div>
+
+            <div id="push"></div>
+        </div>
+
+        <div id="footer">
+            <div class="container">
+                <p class="muted credit">jQuery Leaflet AddressPicker, created by <a href="http://aurox-dev.fr">Aurox</a>.</p>
+            </div>
+        </div>
+        <script src="js/main.js"></script>
+    </body>
+</html>
