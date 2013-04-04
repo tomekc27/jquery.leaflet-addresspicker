@@ -93,12 +93,16 @@
 
                                     <div class="input-prepend">
                                         <span class="add-on">Code Postal</span>
-                                        <input class="input-medium zip_code" type="text" placeholder="Code Postal" disabled>
+                                        <input class="input-medium postal_code" type="text" placeholder="Code Postal" disabled>
                                     </div>
 
                                     <div class="input-prepend">
                                         <span class="add-on">Type</span>
                                         <input class="input-medium type" type="text" placeholder="Type" disabled>
+                                    </div>
+                                    <div class="input-prepend">
+                                        <span class="add-on">Adresse postale</span>
+                                        <input class="input-medium street_address" type="text" placeholder="Adresse postale" disabled>
                                     </div>
                                 </div>
                                 <div class="span6">
@@ -152,9 +156,9 @@
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td>update_callback</td>
-                                            <td>null</td>
-                                            <td>Pour l'instant inutilisé.</td>
+                                            <td>map_options</td>
+                                            <td>Object</td>
+                                            <td>Options concernant la map et son initialisation.</td>
                                         </tr>
                                         <tr>
                                             <td>map_options.min_zoom</td>
@@ -192,6 +196,11 @@
                                             <td>map_options.scroll_wheel</td>
                                             <td>false</td>
                                             <td>Autoriser le zoom sur la map au scroll.</td>
+                                        </tr>
+                                        <tr>
+                                            <td>elements</td>
+                                            <td>Object</td>
+                                            <td>Liste des Balises contenant les données à mettre à jours.</td>
                                         </tr>
                                         <tr>
                                             <td>elements.map</td>
@@ -247,6 +256,55 @@
                                                 Par exemple: localité, établissement, adresse, etc.
                                             </td>
                                         </tr>
+                                        <tr>
+                                            <td>callbacks</td>
+                                            <td>Object</td>
+                                            <td>Liste des callbacks.</td>
+                                        </tr>
+                                        <tr>
+                                            <td>callbacks.before_load</td>
+                                            <td>false</td>
+                                            <td>Fonction de callback appelée avant le chargement des éléments (notamment de la map).</td>
+                                        </tr>
+                                        <tr>
+                                            <td>callbacks.after_load</td>
+                                            <td>false</td>
+                                            <td>Fonction de callback appelée une fois le chargement des éléments (notamment de la map) effectué.</td>
+                                        </tr>
+                                        <tr>
+                                            <td>callbacks.before_update</td>
+                                            <td>false</td>
+                                            <td>
+                                                Fonction de callback appelée avant la mise à jour des informations (latitude, longitude, code postal, etc).
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>callbacks.after_update</td>
+                                            <td>false</td>
+                                            <td>
+                                                Fonction de callback appelée une fois la mise à jour des informations (latitude, longitude, code postal, etc) effectuée.
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>callbacks.before_move</td>
+                                            <td>false</td>
+                                            <td>Fonction de callback appelée avant le déplacement du marker.</td>
+                                        </tr>
+                                        <tr>
+                                            <td>callbacks.after_move</td>
+                                            <td>false</td>
+                                            <td>Fonction de callback appelée après le déplacement du marker.</td>
+                                        </tr>
+                                        <tr>
+                                            <td>callbacks.on_focus_address</td>
+                                            <td>false</td>
+                                            <td>Fonction de callback appelée au focus sur l'adresse proposée par l'autocomplete.</td>
+                                        </tr>
+                                        <tr>
+                                            <td>callbacks.on_select_address</td>
+                                            <td>false</td>
+                                            <td>Fonction de callback appelée à la sélection de l'adresse.</td>
+                                        </tr>
                                     </tbody>
                                 </table>
                             </div>
@@ -297,9 +355,9 @@
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td>update_callback</td>
-                                            <td>null</td>
-                                            <td>Not used for the moment.</td>
+                                            <td>map_options</td>
+                                            <td>Object</td>
+                                            <td>Some options about the map and its initialisation.</td>
                                         </tr>
                                         <tr>
                                             <td>map_options.min_zoom</td>
@@ -337,6 +395,11 @@
                                             <td>map_options.scroll_wheel</td>
                                             <td>false</td>
                                             <td>Authorize the user to zoom by scrolling.</td>
+                                        </tr>
+                                        <tr>
+                                            <td>elements</td>
+                                            <td>Object</td>
+                                            <td>Some HTML tags containing datas to update.</td>
                                         </tr>
                                         <tr>
                                             <td>elements.map</td>
@@ -391,6 +454,55 @@
                                                 Tag within which the view type will be displayed.
                                                 For example: locality, establishment, street address, etc.
                                             </td>
+                                        </tr>
+                                        <tr>
+                                            <td>callbacks</td>
+                                            <td>Object</td>
+                                            <td>Callbacks list.</td>
+                                        </tr>
+                                        <tr>
+                                            <td>callbacks.before_load</td>
+                                            <td>false</td>
+                                            <td>Callback function called before elements (map, etc) loading.</td>
+                                        </tr>
+                                        <tr>
+                                            <td>callbacks.after_load</td>
+                                            <td>false</td>
+                                            <td>Callback function called at the end of elements loading.</td>
+                                        </tr>
+                                        <tr>
+                                            <td>callbacks.before_update</td>
+                                            <td>false</td>
+                                            <td>
+                                                Callback function called before doing informations's (latitude, longitude, zip code, etc) update .
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>callbacks.after_update</td>
+                                            <td>false</td>
+                                            <td>
+                                                Callback function called once informations's (latitude, longitude, code postal, etc) update have been done.
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>callbacks.before_move</td>
+                                            <td>false</td>
+                                            <td>Callback function called before the marker's move.</td>
+                                        </tr>
+                                        <tr>
+                                            <td>callbacks.after_move</td>
+                                            <td>false</td>
+                                            <td>Callback function called after the marker's move.</td>
+                                        </tr>
+                                        <tr>
+                                            <td>callbacks.on_focus_address</td>
+                                            <td>false</td>
+                                            <td>Callback function called when the address suggested by the autocomplete is focused.</td>
+                                        </tr>
+                                        <tr>
+                                            <td>callbacks.on_select_address</td>
+                                            <td>false</td>
+                                            <td>Callback function called when the address suggested by the autocomplete is selected.</td>
                                         </tr>
                                     </tbody>
                                 </table>
