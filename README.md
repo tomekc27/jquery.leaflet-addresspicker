@@ -25,7 +25,7 @@ Presentation
 Demonstration
 -------------
 
-[jQuery Leaflet Addresspicker Demo & Full doc](aurox.github.com/jquery.leaflet-addresspicker)
+[jQuery Leaflet Addresspicker Demo & Full doc](http://aurox.github.com/jquery.leaflet-addresspicker)
 
 
 Implementation
