@@ -24,7 +24,6 @@
       bind_marker: true,
       draggable_marker: true,
       region_bias: null,
-      update_callback: null,
       map_options: {
           min_zoom: 4,
           max_zoom: 18,
@@ -44,9 +43,32 @@
           administrative_area_level_2: false,
           administrative_area_level_1: false,
           country: false,
-          zip_code: false,
-          type: false
+          postal_code: false,
+          type: false,
+          street_address: false
+      },
+      callbacks: {
+        before_load: false,
+        after_load: false,
+        before_update: false,
+        after_update: false,
+        before_move: false,
+        after_move: false,
+        on_focus_address: false,
+        on_select_address: false
       }
+    },
+
+    caracteristiques: {
+      lat: false,
+      lng: false,
+      locality: false,
+      administrative_area_level_2: false,
+      administrative_area_level_1: false,
+      country: false,
+      postal_code: false,
+      type: false,
+      street_address: false
     },
 
     marker: function() {
@@ -58,7 +80,7 @@
     },
 
     update_position: function() {
-      this._update_position(this.marker.getLatLng());
+      this._update_position(this.marker.getLatLng(), true);
     },
     
     reload_position: function() {
@@ -73,7 +95,7 @@
       this.geocoder = new google.maps.Geocoder();
       this.element.autocomplete({
         source: $.proxy(this._geocode, this),  
-        focus:  $.proxy(this._focusAddress, this),
+        focus:  $.proxy(this._focus_address, this),
         select: $.proxy(this._select_address, this),
         messages: {
           noResults: '',
@@ -81,14 +103,21 @@
         }
       });
       
-      this.lat          = $(this.options.elements.lat);
-      this.lng          = $(this.options.elements.lng);
-      this.locality     = $(this.options.elements.locality);
-      this.administrative_area_level_2 = $(this.options.elements.administrative_area_level_2);
-      this.administrative_area_level_1 = $(this.options.elements.administrative_area_level_1);
-      this.country      = $(this.options.elements.country);
-      this.zip_code  = $(this.options.elements.zip_code);
-      this.type         = $(this.options.elements.type);
+      this.all_fields = [
+          "map", "lat", "lng", 
+          "locality", "administrative_area_level_1", 
+          "administrative_area_level_2", "country",
+          "postal_code", "type", "street_address"
+        ];
+
+      this.fields = this.all_fields.slice(3, this.all_fields.length);
+
+      for(i in this.all_fields){
+        this[this.all_fields[i]] = $(this.options.elements[this.all_fields[i]]);
+      }
+
+      this.caracteristiques.lat = this.options.map_options.center.lat;
+      this.caracteristiques.lng = this.options.map_options.center.lng;
 
       if (this.options.elements.map) {
         this.map_element = $(this.options.elements.map);
@@ -97,6 +126,11 @@
     },
 
      _init_map: function() {
+      // Before Load callback
+      if(this.options.callbacks.before_load){
+        this.options.callbacks.before_load(this.caracteristiques);
+      }
+
       self = this;
       if (this.lat && this.lat.val()) {
         this.options.map_options.center = new L.LatLng(this.lat.val(), this.lng.val());
@@ -127,19 +161,44 @@
         self._marker_moved();
       });
 
+      this.marker.on("dragstart", function(event){
+        if(self.options.callbacks.before_move){
+          self.options.callbacks.before_move(self.caracteristiques);
+        }
+      });
+
+      // After Load callback
+      if(this.options.callbacks.after_load){
+        this.options.callbacks.after_load(this.caracteristiques);
+      }
     },
     
-    _update_position: function(location) {
+    _update_position: function(location, active_callbacks) {
+
+      if(this.options.callbacks.before_update && active_callbacks){
+        this.options.callbacks.before_update(this.caracteristiques);
+      }
+
+
       if (this.lat) {
         this.lat.val(location.lat);
+        this.caracteristiques.lat = location.lat;
       }
       if (this.lng) {
         this.lng.val(location.lng);
+        this.caracteristiques.lng = location.lng;
+      }
+
+      if(this.options.callbacks.after_update && active_callbacks){
+        this.options.callbacks.after_update(this.caracteristiques);
       }
     },
     
     _marker_moved: function() {
-      this._update_position(this.marker.getLatLng());
+      if(this.options.callbacks.after_move){
+        this.options.callbacks.after_move(this.caracteristiques);
+      }
+      this._update_position(this.marker.getLatLng(), true);
     },
     
     // Autocomplete source method: fill its suggests with google geocoder results
@@ -168,44 +227,59 @@
       return false;
     },
     
-    _focusAddress: function(event, ui) {
+    _focus_address: function(event, ui) {
+
+      if(this.options.callbacks.on_focus_address){
+        this.options.callbacks.on_focus_address(this.caracteristiques);
+      }
+
+
       var address = ui.item;
       if (!address) {
         return;
       }
+      this._update_informations(address);
       
       if (this.marker) {
+        if(this.options.callbacks.before_move){
+          this.options.callbacks.before_move(this.caracteristiques);
+        }
         var location = this._parse_latlng(address.geometry.location);
         var viewport = this._convert_to_bounds(address.geometry.viewport);
         this.marker.setLatLng(location);
         this.map.fitBounds(viewport);
+        if(this.options.callbacks.after_move){
+          this.options.callbacks.after_move(this.caracteristiques);
+        }
+        this._update_position(location, false);
       }
-      this._update_position(location);
-      
-      if (this.locality) {
-        this.locality.val(this._find_infos(address, 'locality'));
+
+
+    },
+
+    _update_informations: function(address){
+      if(this.options.callbacks.before_update){
+        this.options.callbacks.before_update(this.caracteristiques);
       }
-      if (this.administrative_area_level_2) {
-        this.administrative_area_level_2.val(this._find_infos(address, 'administrative_area_level_2'));
+
+      for(i in this.fields){
+        if(this[this.fields[i]] && this.fields[i] != "type"){
+          this[this.fields[i]].val(this._find_infos(address, this.fields[i]));
+          this.caracteristiques[this.fields[i]] = this._find_infos(address, this.fields[i]);
+        }else if(this.fields[i] == "type"){
+          this.type.val(address.types[0]);
+          this.caracteristiques.type = address.types[0];
+        }
       }
-      if (this.administrative_area_level_1) {
-        this.administrative_area_level_1.val(this._find_infos(address, 'administrative_area_level_1'));
-      }
-      if (this.country) {
-        this.country.val(this._find_infos(address, 'country'));
-      }
-      if (this.zip_code) {
-        this.zip_code.val(this._find_infos(address, 'postal_code'));
-      }     
-      if (this.type) {
-        this.type.val(address.types[0]);
+
+      if(this.options.callbacks.after_update){
+        this.options.callbacks.after_update(this.caracteristiques);
       }
     },
     
     _select_address: function(event, ui) {
-      this.selectedResult = ui.item;
-      if (this.options.updateCallback) {
-        this.options.updateCallback(this.selectedResult);
+      if(this.options.callbacks.on_select_address){
+        this.options.callbacks.on_select_address(this.caracteristiques);
       }
     },
 
