@@ -39,6 +39,15 @@ Implementation
 
 ```js
 $(document).ready(function(){
+
+    function do_something(){
+        // do some stuff
+    }
+
+    function do_something_else(){
+        // do some stuff
+    }
+
     $(".search").leaflet_addresspicker({
         region_bias: "fr",
         map_options: {
@@ -48,6 +57,10 @@ $(document).ready(function(){
         elements: {
             map: ".map",
             locality: ".city"
+        },
+        callbacks: {
+            after_load: do_something,
+            after_update: do_something_else
         }
     });
 });
