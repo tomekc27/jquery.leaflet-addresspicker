@@ -16,7 +16,7 @@
         <script src="src/jquery.leaflet.addresspicker.js" type="text/javascript"></script>
         <script src="js/bootstrap.min.js" type="text/javascript"></script>
     </head>
-    <body>
+    <body data-spy="scroll">
         <!-- Part 1: Wrap all page content here -->
         <div id="wrap">
             <div class="navbar navbar-inverse navbar-fixed-top">
@@ -33,24 +33,59 @@
             </div>
             <!-- Begin page content -->
             <div class="container-fluid">
+
                 <div class="row-fluid">
                     <div class="page-header">
                         <h1>jQuery addresspicker for leaflet maps!</h1>
                     </div>
                 </div>
-                <div class="accordion">
-                    <div class="accordion-group">
-                        <div class="accordion-heading">
-                            <a href="#demo" class="accordion-toggle" data-toggle="collapse">
-                                Demonstration
-                            </a>
-                        </div><!-- /.accordion-heading -->
-                        <div id="demo" class="accordion-body collapse in">
+                
+                <div class="row-fluid">
+                    <div class="span3">
+                        <ul class="nav nav-list bs-docs-sidenav affix">
+                            <li class="nav-header">jQuery AddressPicker</li>
+                            <li>
+                                <a href="#demonstration">
+                                    Demonstration
+                                    <i class="icon-chevron-right"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#documentation-english">
+                                    Documentation (english)
+                                    <i class="icon-chevron-right"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#documentation">
+                                    Documentation (français)
+                                    <i class="icon-chevron-right"></i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#examples">
+                                    Examples
+                                    <i class="icon-chevron-right"></i>
+                                </a>
+                            </li>
+                            <li class="nav-header">About the project</li>
+                            <li>
+                                <a href="#about">
+                                    About
+                                    <i class="icon-chevron-right"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="span9">
+                        <section id="demonstration">
+                            <h2>Demonstration</h2>
                             <div class="row-fluid">
-                                <div class="span3 offset6">
+                                <div class="span3 offset4">
                                     <input class="address" type="text" placeholder="Address...">
                                 </div>
-                            </div><!-- /.row-fluid -->
+                            </div>
                             <div class="row-fluid">
                                 <div class="span4">
                                     <div class="input-prepend">
@@ -71,18 +106,18 @@
                                     <div class="input-prepend">
                                         <span class="add-on">Zone Administrative 1</span>
                                         <input  
-                                                class="input-medium administrative_area_level_1" 
-                                                type="text" placeholder="Zone Administrative 1" 
-                                                disabled
+                                        class="input-medium administrative_area_level_1" 
+                                        type="text" placeholder="Zone Administrative 1" 
+                                        disabled
                                         >
                                     </div>
 
                                     <div class="input-prepend">
                                         <span class="add-on">Zone Administrative 2</span>
                                         <input  
-                                                class="input-medium administrative_area_level_2" 
-                                                type="text" placeholder="Zone Administrative 2" 
-                                                disabled
+                                        class="input-medium administrative_area_level_2" 
+                                        type="text" placeholder="Zone Administrative 2" 
+                                        disabled
                                         >
                                     </div>
 
@@ -100,226 +135,35 @@
                                         <span class="add-on">Type</span>
                                         <input class="input-medium type" type="text" placeholder="Type" disabled>
                                     </div>
+
                                     <div class="input-prepend">
                                         <span class="add-on">Adresse postale</span>
                                         <input class="input-medium street_address" type="text" placeholder="Adresse postale" disabled>
                                     </div>
+
+                                    <div class="alert alert-info">
+                                        <h6>English</h6>
+                                        <p>
+                                            Take a look at your javascript console to see some logs from the callbacks.
+                                        </p>
+                                    </div>
+
+                                    <div class="alert alert-info">
+                                        <h6>Français</h6>
+                                        <p>
+                                            Allez jetter un oeil à votre console javascript pour voir les logs générés par les callbacks.
+                                        </p>
+                                    </div>
                                 </div>
-                                <div class="span6">
+                                <div class="span6 offset1">
                                     <div class="map"></div>
                                 </div>
-                            </div><!-- /.row-fluid -->
-                        </div><!-- /#demo.accordion-body -->
-                    </div><!-- /.accordion-group -->
-
-                    <div class="accordion-group">
-                        <div class="accordion-heading">
-                            <a href="#documentation" id="demo" class="accordion-toggle" data-toggle="collapse">
-                                Documentation
-                            </a>
-                        </div>
-                        <div id="documentation" class="accordion-body collapse">
-                            <div class="row-fluid">
-                                <table class="table table-stripped table-bordered span10 offset1">
-                                    <thead>
-                                        <tr>
-                                            <th>Nom de l'option</th>
-                                            <th>Valeur par Défaut</th>
-                                            <th>Description</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>address_suffix</td>
-                                            <td>"" (chaine de caractères vide)</td>
-                                            <td>
-                                                Suffixe à rajouter aux adresses lors de l'envoi au géocodeur. <br>
-                                                Exemple: ", France" si vous ne voulez que des adresses française.
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>bind_marker</td>
-                                            <td>true</td>
-                                            <td>Afficher un marqueur sur la map.</td>
-                                        </tr>
-                                        <tr>
-                                            <td>draggable_marker</td>
-                                            <td>true</td>
-                                            <td>Donner la possibilité à l'utilisateur de déplacer le marqueur sur la map.</td>
-                                        </tr>
-                                        <tr>
-                                            <td>region_bias</td>
-                                            <td>null</td>
-                                            <td>
-                                                Influencer le résultat renvoyé par le geocodeur en fonction d'une région. <br>
-                                                Par exemple, si region_bias est à "fr", une recherche sur Paris renverra la capitale française et non son homonyme du Texas ou du Tennessee.
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>map_options</td>
-                                            <td>Object</td>
-                                            <td>Options concernant la map et son initialisation.</td>
-                                        </tr>
-                                        <tr>
-                                            <td>map_options.min_zoom</td>
-                                            <td>4</td>
-                                            <td>Niveau de zoom minimum</td>
-                                        </tr>
-                                        <tr>
-                                            <td>map_options.max_zoom</td>
-                                            <td>18</td>
-                                            <td>Niveau de zoom maximum.</td>
-                                        </tr>
-                                        <tr>
-                                            <td>map_options.tile.url</td>
-                                            <td>
-                                                "http://{s}.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/997/256/{z}/{x}/{y}.png"
-                                            </td>
-                                            <td></td>
-                                        </tr>
-                                        <tr>
-                                            <td>map_options.tile.attrib</td>
-                                            <td>"Map data © openstreetmap contributors"</td>
-                                            <td></td>
-                                        </tr>
-                                        <tr>
-                                            <td>map_options.zoom</td>
-                                            <td>5</td>
-                                            <td>Niveau de zoom initial.</td>
-                                        </tr>
-                                        <tr>
-                                            <td>map_options.center</td>
-                                            <td>new L.LatLng(46, 2)</td>
-                                            <td>Centrage par défaut.</td>
-                                        </tr>
-                                        <tr>
-                                            <td>map_options.scroll_wheel</td>
-                                            <td>false</td>
-                                            <td>Autoriser le zoom sur la map au scroll.</td>
-                                        </tr>
-                                        <tr>
-                                            <td>elements</td>
-                                            <td>Object</td>
-                                            <td>Liste des Balises contenant les données à mettre à jours.</td>
-                                        </tr>
-                                        <tr>
-                                            <td>elements.map</td>
-                                            <td>false</td>
-                                            <td>Balise accueillant la map.</td>
-                                        </tr>
-                                        <tr>
-                                            <td>elements.lat</td>
-                                            <td>false</td>
-                                            <td>Input dans lequel sera affichée la latitude.</td>
-                                        </tr>
-                                        <tr>
-                                            <td>elements.lng</td>
-                                            <td>false</td>
-                                            <td>Input dans lequel sera affichée la longitude.</td>
-                                        </tr>
-                                        <tr>
-                                            <td>elements.locality</td>
-                                            <td>false</td>
-                                            <td>Input dans lequel sera affichée la ville.</td>
-                                        </tr>
-                                        <tr>
-                                            <td>elements.administrative_area_level_1</td>
-                                            <td>false</td>
-                                            <td>
-                                                Input dans lequel sera affichée la zone administrative de niveau 1. <br>
-                                                État aux USA, Région en France.
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>elements.administrative_area_level_2</td>
-                                            <td>false</td>
-                                            <td>
-                                                Input dans lequel sera affichée la zone administrative de niveau 2. <br>
-                                                Département en France.
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>elements.country</td>
-                                            <td>false</td>
-                                            <td>Input dans lequel sera affiché le pays.</td>
-                                        </tr>
-                                        <tr>
-                                            <td>elements.zip_code</td>
-                                            <td>false</td>
-                                            <td>Input dans lequel sera affiché le code postal.</td>
-                                        </tr>
-                                        <tr>
-                                            <td>elements.type</td>
-                                            <td>false</td>
-                                            <td>
-                                                Input dans lequel sera affiché le type de la vue.
-                                                Par exemple: localité, établissement, adresse, etc.
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>callbacks</td>
-                                            <td>Object</td>
-                                            <td>Liste des callbacks.</td>
-                                        </tr>
-                                        <tr>
-                                            <td>callbacks.before_load</td>
-                                            <td>false</td>
-                                            <td>Fonction de callback appelée avant le chargement des éléments (notamment de la map).</td>
-                                        </tr>
-                                        <tr>
-                                            <td>callbacks.after_load</td>
-                                            <td>false</td>
-                                            <td>Fonction de callback appelée une fois le chargement des éléments (notamment de la map) effectué.</td>
-                                        </tr>
-                                        <tr>
-                                            <td>callbacks.before_update</td>
-                                            <td>false</td>
-                                            <td>
-                                                Fonction de callback appelée avant la mise à jour des informations (latitude, longitude, code postal, etc).
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>callbacks.after_update</td>
-                                            <td>false</td>
-                                            <td>
-                                                Fonction de callback appelée une fois la mise à jour des informations (latitude, longitude, code postal, etc) effectuée.
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>callbacks.before_move</td>
-                                            <td>false</td>
-                                            <td>Fonction de callback appelée avant le déplacement du marker.</td>
-                                        </tr>
-                                        <tr>
-                                            <td>callbacks.after_move</td>
-                                            <td>false</td>
-                                            <td>Fonction de callback appelée après le déplacement du marker.</td>
-                                        </tr>
-                                        <tr>
-                                            <td>callbacks.on_focus_address</td>
-                                            <td>false</td>
-                                            <td>Fonction de callback appelée au focus sur l'adresse proposée par l'autocomplete.</td>
-                                        </tr>
-                                        <tr>
-                                            <td>callbacks.on_select_address</td>
-                                            <td>false</td>
-                                            <td>Fonction de callback appelée à la sélection de l'adresse.</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
                             </div>
-                        </div>
-                    </div>
-
-                    <div class="accordion-group">
-                        <div class="accordion-heading">
-                            <a href="#english_documentation" id="demo" class="accordion-toggle" data-toggle="collapse">
-                                English documentation (Of course!)
-                            </a>
-                        </div>
-                        <div id="english_documentation" class="accordion-body collapse">
+                        </section>
+                        <section id="documentation-english">
+                            <h2>Documentation (english)</h2>
                             <div class="row-fluid">
-                                <table class="table table-stripped table-bordered span10 offset1">
+                                <table class="table table-stripped table-bordered span12">
                                     <thead>
                                         <tr>
                                             <th>Option name</th>
@@ -507,44 +351,236 @@
                                     </tbody>
                                 </table>
                             </div>
-                        </div>
-                    </div>
-
-                    <div class="accordion-group">
-                        <div class="accordion-heading">
-                            <a href="#about" class="accordion-toggle" data-toggle="collapse">About</a>
-                        </div>
-                        <div id="about" class="accordion-body collapse">
+                        </section>
+                        <section id="documentation">
+                            <h2>Documentation (Français)</h2>
                             <div class="row-fluid">
-                                <div class="span10 offset1">
+                                <table class="table table-stripped table-bordered span12">
+                                    <thead>
+                                        <tr>
+                                            <th>Nom de l'option</th>
+                                            <th>Valeur par Défaut</th>
+                                            <th>Description</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>address_suffix</td>
+                                            <td>"" (chaine de caractères vide)</td>
+                                            <td>
+                                                Suffixe à rajouter aux adresses lors de l'envoi au géocodeur. <br>
+                                                Exemple: ", France" si vous ne voulez que des adresses française.
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>bind_marker</td>
+                                            <td>true</td>
+                                            <td>Afficher un marqueur sur la map.</td>
+                                        </tr>
+                                        <tr>
+                                            <td>draggable_marker</td>
+                                            <td>true</td>
+                                            <td>Donner la possibilité à l'utilisateur de déplacer le marqueur sur la map.</td>
+                                        </tr>
+                                        <tr>
+                                            <td>region_bias</td>
+                                            <td>null</td>
+                                            <td>
+                                                Influencer le résultat renvoyé par le geocodeur en fonction d'une région. <br>
+                                                Par exemple, si region_bias est à "fr", une recherche sur Paris renverra la capitale française et non son homonyme du Texas ou du Tennessee.
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>map_options</td>
+                                            <td>Object</td>
+                                            <td>Options concernant la map et son initialisation.</td>
+                                        </tr>
+                                        <tr>
+                                            <td>map_options.min_zoom</td>
+                                            <td>4</td>
+                                            <td>Niveau de zoom minimum</td>
+                                        </tr>
+                                        <tr>
+                                            <td>map_options.max_zoom</td>
+                                            <td>18</td>
+                                            <td>Niveau de zoom maximum.</td>
+                                        </tr>
+                                        <tr>
+                                            <td>map_options.tile.url</td>
+                                            <td>
+                                                "http://{s}.tile.cloudmade.com/BC9A493B41014CAABB98F0471D759707/997/256/{z}/{x}/{y}.png"
+                                            </td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td>map_options.tile.attrib</td>
+                                            <td>"Map data © openstreetmap contributors"</td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td>map_options.zoom</td>
+                                            <td>5</td>
+                                            <td>Niveau de zoom initial.</td>
+                                        </tr>
+                                        <tr>
+                                            <td>map_options.center</td>
+                                            <td>new L.LatLng(46, 2)</td>
+                                            <td>Centrage par défaut.</td>
+                                        </tr>
+                                        <tr>
+                                            <td>map_options.scroll_wheel</td>
+                                            <td>false</td>
+                                            <td>Autoriser le zoom sur la map au scroll.</td>
+                                        </tr>
+                                        <tr>
+                                            <td>elements</td>
+                                            <td>Object</td>
+                                            <td>Liste des Balises contenant les données à mettre à jours.</td>
+                                        </tr>
+                                        <tr>
+                                            <td>elements.map</td>
+                                            <td>false</td>
+                                            <td>Balise accueillant la map.</td>
+                                        </tr>
+                                        <tr>
+                                            <td>elements.lat</td>
+                                            <td>false</td>
+                                            <td>Input dans lequel sera affichée la latitude.</td>
+                                        </tr>
+                                        <tr>
+                                            <td>elements.lng</td>
+                                            <td>false</td>
+                                            <td>Input dans lequel sera affichée la longitude.</td>
+                                        </tr>
+                                        <tr>
+                                            <td>elements.locality</td>
+                                            <td>false</td>
+                                            <td>Input dans lequel sera affichée la ville.</td>
+                                        </tr>
+                                        <tr>
+                                            <td>elements.administrative_area_level_1</td>
+                                            <td>false</td>
+                                            <td>
+                                                Input dans lequel sera affichée la zone administrative de niveau 1. <br>
+                                                État aux USA, Région en France.
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>elements.administrative_area_level_2</td>
+                                            <td>false</td>
+                                            <td>
+                                                Input dans lequel sera affichée la zone administrative de niveau 2. <br>
+                                                Département en France.
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>elements.country</td>
+                                            <td>false</td>
+                                            <td>Input dans lequel sera affiché le pays.</td>
+                                        </tr>
+                                        <tr>
+                                            <td>elements.zip_code</td>
+                                            <td>false</td>
+                                            <td>Input dans lequel sera affiché le code postal.</td>
+                                        </tr>
+                                        <tr>
+                                            <td>elements.type</td>
+                                            <td>false</td>
+                                            <td>
+                                                Input dans lequel sera affiché le type de la vue.
+                                                Par exemple: localité, établissement, adresse, etc.
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>callbacks</td>
+                                            <td>Object</td>
+                                            <td>Liste des callbacks.</td>
+                                        </tr>
+                                        <tr>
+                                            <td>callbacks.before_load</td>
+                                            <td>false</td>
+                                            <td>Fonction de callback appelée avant le chargement des éléments (notamment de la map).</td>
+                                        </tr>
+                                        <tr>
+                                            <td>callbacks.after_load</td>
+                                            <td>false</td>
+                                            <td>Fonction de callback appelée une fois le chargement des éléments (notamment de la map) effectué.</td>
+                                        </tr>
+                                        <tr>
+                                            <td>callbacks.before_update</td>
+                                            <td>false</td>
+                                            <td>
+                                                Fonction de callback appelée avant la mise à jour des informations (latitude, longitude, code postal, etc).
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>callbacks.after_update</td>
+                                            <td>false</td>
+                                            <td>
+                                                Fonction de callback appelée une fois la mise à jour des informations (latitude, longitude, code postal, etc) effectuée.
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>callbacks.before_move</td>
+                                            <td>false</td>
+                                            <td>Fonction de callback appelée avant le déplacement du marker.</td>
+                                        </tr>
+                                        <tr>
+                                            <td>callbacks.after_move</td>
+                                            <td>false</td>
+                                            <td>Fonction de callback appelée après le déplacement du marker.</td>
+                                        </tr>
+                                        <tr>
+                                            <td>callbacks.on_focus_address</td>
+                                            <td>false</td>
+                                            <td>Fonction de callback appelée au focus sur l'adresse proposée par l'autocomplete.</td>
+                                        </tr>
+                                        <tr>
+                                            <td>callbacks.on_select_address</td>
+                                            <td>false</td>
+                                            <td>Fonction de callback appelée à la sélection de l'adresse.</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </section>   
+                        <section id="examples">
+                            <h2>Examples</h2>
+                            <div class="row-fluid">
+                                <p>
+                                    Coming Soon...
+                                </p>
+                            </div>
+                        </section>
+                        <section id="about">
+                            <h2>About the project</h2>
+                            <div class="row-fluid">
+                                <div class="span6">
                                     <p>
                                         Le projet <strong>jQuery Leaflet addresspicker</strong> est inspiré de <a href="https://github.com/sgruhier/jquery-addresspicker">jQuery addresspicker</a> qui fait globalement la même chose, mais pour google maps.
                                     </p>
                                     <p>
-                                        Je travaillais sur un projet leaflet et voulais avoir quelque chose comme jQuery addresspicker, donc j'ai eu l'idée de faire leaflet addresspicker.
+                                        Je travaillais sur un projet leaflet et voulais avoir quelque chose comme jQuery addresspicker, mais en légèrement plus complet, et adapté à leaflet. C'est ainsi qu'est né le projet <strong>jQuery Leaflet addresspicker</strong>.
                                     </p>
                                     <p>
                                         Si vous voulez contribuer, faites un fork du projet et envoyez une pull request :).
                                     </p>
                                 </div>
-                            </div>
-                            <br><br>
-                            <div class="row-fluid">
-                                <div class="span10 offset1">
+                                <div class="span6">
                                     <p>
                                         The project <strong>jQuery Leaflet addresspicker</strong> was inspired by <a href="https://github.com/sgruhier/jquery-addresspicker">jQuery addresspicker</a> which is nearly the same plugin for google maps.
                                     </p>
                                     <p>
-                                        I was working on leaflet and wanted to have something like jQuery addresspicker, so i did leaflet addresspicker.
+                                        I was working on leaflet and wanted to have something like jQuery addresspicker in a little bit more efficient, so i did leaflet addresspicker.
                                     </p>
                                     <p>
                                         If you want to contribute, please fork the project and do a pull request :).
                                     </p>
                                 </div>
                             </div>
-                        </div>
+                        </section>
                     </div>
-                </div><!-- /.accordion -->
+                </div>
 
             </div>
 
@@ -553,7 +589,7 @@
 
         <div id="footer">
             <div class="container">
-                <p class="muted credit">jQuery Leaflet AddressPicker, created by <a href="http://aurox-dev.fr">Aurox</a>.</p>
+                <p class="muted credit">jQuery Leaflet AddressPicker, created by <a href="https://twitter.com/AuroxDev">@AuroxDev</a>.</p>
             </div>
         </div>
         <script src="js/main.js"></script>
