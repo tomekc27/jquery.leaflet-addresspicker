@@ -13,6 +13,9 @@
  *   jquery.ui.widget.js
  *   jquery.ui.autocomplete.js
  *   leaflet.js
+ *
+ * Contributors:
+ *   @AuroxDev
  */
 
 
@@ -218,10 +221,15 @@
     },
     
     _find_infos: function(result, type) {
-      for (var i = 0; i < result.address_components.length; i++) {
-        var component = result.address_components[i];
-        if (component.types.indexOf(type) !=-1) {
-          return component.long_name;
+      console.log(result);
+      if(type == "street_address"){
+        return result.formatted_address;
+      }else{
+        for (var i = 0; i < result.address_components.length; i++) {
+          var component = result.address_components[i];
+          if (component.types.indexOf(type) !=-1) {
+            return component.long_name;
+          }
         }
       }
       return false;
