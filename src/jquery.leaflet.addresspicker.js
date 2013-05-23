@@ -198,11 +198,7 @@
     },
     
     _marker_moved: function() {
-      if(this.options.callbacks.after_move){
-        this.options.callbacks.after_move(this.caracteristiques);
-      }
-
-      var self          = this;
+      var self          = this,
           markerLatLng  = this.marker.getLatLng(),
           latlng        = new google.maps.LatLng(markerLatLng.lat, markerLatLng.lng);
 
@@ -211,6 +207,11 @@
       }, "reverse");
 
       this._update_position(this.marker.getLatLng(), true);
+      
+      if(this.options.callbacks.after_move){
+        this.options.callbacks.after_move(this.caracteristiques);
+      }
+
     },
 
     _geocode: function(request, response, type){
