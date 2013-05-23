@@ -201,27 +201,41 @@
       if(this.options.callbacks.after_move){
         this.options.callbacks.after_move(this.caracteristiques);
       }
+
+      var self          = this;
+          markerLatLng  = this.marker.getLatLng(),
+          latlng        = new google.maps.LatLng(markerLatLng.lat, markerLatLng.lng);
+
+      this._geocode(latlng, function(results){
+        self._update_informations(results[0]);
+      }, "reverse");
+
       this._update_position(this.marker.getLatLng(), true);
     },
-    
-    // Autocomplete source method: fill its suggests with google geocoder results
-    _geocode: function(request, response) {
-        var address = request.term, self = this;
-        this.geocoder.geocode({
-            'address': address + this.options.address_suffix,
-            'region': this.options.regionBias
-        }, function(results, status) {
-            if (status == google.maps.GeocoderStatus.OK) {
-                for (var i = 0; i < results.length; i++) {
-                    results[i].label =  results[i].formatted_address;
-                };
-            } 
-            response(results);
-        })
+
+    _geocode: function(request, response, type){
+      if(type == "reverse"){
+        var to_geocode = {"latLng": request};
+      }else{
+        var address = request.term,
+            to_geocode = {
+              'address': address + this.options.address_suffix,
+              'region': this.options.regionBias
+            };
+      }
+
+      this.geocoder.geocode(to_geocode, function(results, status) {
+        if (status == google.maps.GeocoderStatus.OK) {
+            for (var i = 0; i < results.length; i++) {
+                results[i].label =  results[i].formatted_address;
+            };
+        }
+        response(results);
+      });
     },
     
+    
     _find_infos: function(result, type) {
-      console.log(result);
       if(type == "street_address"){
         return result.formatted_address;
       }else{
@@ -232,6 +246,7 @@
           }
         }
       }
+
       return false;
     },
     
@@ -295,8 +310,12 @@
       if(object instanceof L.LatLngBounds){
         return object;
       }else{
-        var southWest = new L.LatLng(object.Z.b, object.fa.b),
-            northEast = new L.LatLng(object.Z.d, object.fa.d);
+        var keys    = Object.keys(object),
+            first   = keys[0], 
+            second  = keys[1];
+
+        var southWest = new L.LatLng(object[first].b, object[second].b),
+            northEast = new L.LatLng(object[first].d, object[second].d);
         return new L.LatLngBounds(southWest, northEast);
       }
     },
