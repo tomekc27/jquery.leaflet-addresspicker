@@ -322,7 +322,11 @@
     },
 
     _parse_latlng: function(object){
-      return (object instanceof L.LatLng) ? object : new L.LatLng(object.jb, object.kb);
+      var latlng = [], i;
+      for(var i in object){
+        latlng.push(object[i]);
+      }
+      return (object instanceof L.LatLng) ? object : new L.LatLng(latlng[0], latlng[1]);
     }
   });
 
